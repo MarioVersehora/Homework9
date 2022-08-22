@@ -7,6 +7,7 @@ import com.example.Catalogue.repository.SpecialtyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,15 +19,22 @@ public class SpecialtyService {
 
     public List<Student> getAllStudentsBySpecialty(Integer id) throws SpecialtyNotFoundException {
         Optional<Specialty> specialty = specialtyRepository.findById(id);
-        if(specialty.isEmpty()) {
-            throw new SpecialtyNotFoundException("no specialty");
+        if (specialty.isEmpty()) {
+            throw new SpecialtyNotFoundException("No specialty found!");
         } else {
             return specialty.get().getStudents();
         }
     }
 
+    public Specialty getSpecialtyWithMostStudents() throws SpecialtyNotFoundException {
+        Optional<Specialty> specialty = specialtyRepository.findAll().stream()
+                .min(Comparator.comparing(s -> s.getStudents().size()));
+        if(specialty.isEmpty()) {
+            throw new SpecialtyNotFoundException("No specialty found!");
+        } else {
+            return specialty.get();
+        }
 
-
-
+    }
 
 }

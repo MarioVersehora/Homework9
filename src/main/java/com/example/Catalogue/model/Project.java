@@ -6,18 +6,16 @@ import javax.persistence.*;
 
 @Entity
 @Data
-public class Course {
+public class Project {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String subject;
-    private Integer creditPoints;
+    private String project;
 
     @ManyToOne
-    private Specialty specialty;
+    Professor professor;
 
-    @ManyToOne
-    private Professor professor;
+
 }

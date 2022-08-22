@@ -16,25 +16,28 @@ public class Student {
     private Integer id;
 
     @OneToMany
-    List<Grade> grades = new ArrayList<>();
+    private List<Grade> grades = new ArrayList<>();
 
     @ManyToOne
-    Specialty specialty;
+    private Specialty specialty;
 
     public void addGrade(Grade grade) {
         grades.add(grade);
     }
 
-    public Integer getAnnualAverageGrade() {
-//       if(grades.isEmpty()) {
-//            throw new NoGradeException("You do not have any grade!");
-//        }
-        Integer averageGrade = 0;
-        for(Grade grade : grades) {
-            averageGrade += grade.getGrade();
+    public Integer getAnnualAverageGrade() throws NoGradeException {
+        if (grades.isEmpty()) {
+            throw new NoGradeException("You do not have any grade!");
+        } else {
+            Integer averageGrade = 0;
+            for (Grade grade : grades) {
+                averageGrade += grade.getGrade();
+            }
+
+            return averageGrade / grades.size();
+
         }
-
-        return averageGrade/grades.size();
-
     }
+
+
 }

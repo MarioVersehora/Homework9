@@ -15,9 +15,9 @@ public class Specialty {
     private Integer id;
 
     @OneToMany
-    List<Student> students = new ArrayList<>();
+    private List<Student> students = new ArrayList<>();
 
     @OneToMany
-    List<Course> courses = new ArrayList<>();
+    private List<Course> courses = new ArrayList<>();
 
 }

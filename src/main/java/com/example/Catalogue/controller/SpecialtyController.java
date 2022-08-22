@@ -18,7 +18,7 @@ public class SpecialtyController {
 
     private final SpecialtyService specialtyService;
 
-    @GetMapping("all/{id}")
+    @GetMapping("{id}")
     public List<Student> getAllStudentsBySpecialty(@PathVariable Integer id) throws SpecialtyNotFoundException {
         return specialtyService.getAllStudentsBySpecialty(id);
     }

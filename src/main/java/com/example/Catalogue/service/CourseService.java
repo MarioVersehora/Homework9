@@ -19,4 +19,5 @@ public class CourseService {
                 .filter(course -> course.getCreditPoints() > 3)
                 .collect(Collectors.toList());
     }
+
 }

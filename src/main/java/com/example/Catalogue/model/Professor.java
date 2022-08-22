@@ -21,7 +21,10 @@ public class Professor {
     private Integer id;
 
     @OneToMany
-    List<Course> courses = new ArrayList<>();
+    private List<Course> courses = new ArrayList<>();
+
+    @OneToMany
+    private List<Project> projects = new ArrayList<>();
 
     private String firstName;
     private String lastName;

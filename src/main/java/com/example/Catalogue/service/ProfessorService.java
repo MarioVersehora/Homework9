@@ -1,6 +1,5 @@
 package com.example.Catalogue.service;
 
-import com.example.Catalogue.exception.NoGradeException;
 import com.example.Catalogue.exception.ProfessorNotFoundException;
 import com.example.Catalogue.model.Course;
 import com.example.Catalogue.model.Professor;
@@ -17,10 +16,10 @@ public class ProfessorService {
 
     private final ProfessorRepository professorRepository;
 
-    public List<Course> getCoursesByProfessorId(Integer id) throws ProfessorNotFoundException {
+    public List<Course> getAllCoursesByProfessorId(Integer id) throws ProfessorNotFoundException {
         Optional<Professor> professor = professorRepository.findById(id);
-        if(professor.isEmpty()) {
-            throw new ProfessorNotFoundException("No professor");
+        if (professor.isEmpty()) {
+            throw new ProfessorNotFoundException("No professor found!");
         } else {
             return professor.get().getCourses();
         }

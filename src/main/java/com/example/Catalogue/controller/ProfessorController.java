@@ -19,7 +19,7 @@ public class ProfessorController {
     private final ProfessorService professorService;
 
     @GetMapping("courses/{id}")
-    public List<Course> getCoursesByProfessorId(@PathVariable Integer id) throws ProfessorNotFoundException {
-        return professorService.getCoursesByProfessorId(id);
+    public List<Course> getAllCoursesByProfessorId(@PathVariable Integer id) throws ProfessorNotFoundException {
+        return professorService.getAllCoursesByProfessorId(id);
     }
 }
