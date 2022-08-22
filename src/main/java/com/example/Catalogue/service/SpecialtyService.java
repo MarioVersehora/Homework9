@@ -22,9 +22,9 @@ public class SpecialtyService {
         Optional<Specialty> specialty = specialtyRepository.findById(id);
         if (specialty.isEmpty()) {
             throw new SpecialtyNotFoundException("No specialty found!");
-        } else {
-            return specialty.get().getStudents();
         }
+        return specialty.get().getStudents();
+
     }
 
     public Specialty getSpecialtyWithMostStudents() throws SpecialtyNotFoundException {
@@ -32,23 +32,23 @@ public class SpecialtyService {
                 .max(Comparator.comparing(s -> s.getStudents().size()));
         if (specialty.isEmpty()) {
             throw new SpecialtyNotFoundException("No specialty found!");
-        } else {
-            return specialty.get();
         }
+        return specialty.get();
+
     }
 
     public Integer getAverageAtASpecialty(Integer id) throws SpecialtyNotFoundException, NoGradeException {
         Optional<Specialty> specialty = specialtyRepository.findById(id);
         if (specialty.isEmpty()) {
             throw new SpecialtyNotFoundException("No specialty found!");
-        } else {
-            Integer averageGrade = 0;
-            List<Student> studentsSpecialty = specialty.get().getStudents();
-            for (Student student : studentsSpecialty) {
-                averageGrade += student.getAnnualAverageGrade();
-            }
-            return averageGrade / studentsSpecialty.size();
         }
+        Integer averageGrade = 0;
+        List<Student> studentsSpecialty = specialty.get().getStudents();
+        for (Student student : studentsSpecialty) {
+            averageGrade += student.getAnnualAverageGrade();
+        }
+        return averageGrade / studentsSpecialty.size();
+
     }
 
 

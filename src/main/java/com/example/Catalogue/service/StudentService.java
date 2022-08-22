@@ -6,6 +6,7 @@ import com.example.Catalogue.exception.StudentNotFoundException;
 import com.example.Catalogue.model.Grade;
 import com.example.Catalogue.model.Specialty;
 import com.example.Catalogue.model.Student;
+import com.example.Catalogue.repository.GradeRepository;
 import com.example.Catalogue.repository.SpecialtyRepository;
 import com.example.Catalogue.repository.StudentRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,13 +24,14 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final SpecialtyRepository specialtyRepository;
 
+    private final GradeRepository gradeRepository;
+
     public List<Grade> getAllGradesByStudentId(Integer id) throws StudentNotFoundException {
         Optional<Student> student = studentRepository.findById(id);
         if (student.isEmpty()) {
             throw new StudentNotFoundException("No student found!");
-        } else {
-            return student.get().getGrades();
         }
+        return student.get().getGrades();
     }
 
     public List<Student> getAllStudentsWithAnnualAverageGreaterThanEight() {
@@ -44,14 +46,20 @@ public class StudentService {
                 .collect(Collectors.toList());
     }
 
-    public void addGradeByStudentId(Grade grade, Integer id) throws StudentNotFoundException {
-        Optional<Student> student = studentRepository.findById(id);
+    public void addGradeByStudentId(Integer gradeId, Integer studentId) throws StudentNotFoundException, NoGradeException {
+        Optional<Student> student = studentRepository.findById(studentId);
+        Optional<Grade> grade = gradeRepository.findById(gradeId);
+
         if (student.isEmpty()) {
             throw new StudentNotFoundException("No student found!");
-        } else {
-            student.get().addGrade(grade);
-            studentRepository.save(student.get());
         }
+
+        if(grade.isEmpty()) {
+            throw new NoGradeException("No grade found!");
+        }
+
+        student.get().addGrade(grade.get());
+        studentRepository.save(student.get());
     }
 
     public Student getStudentWithMostAnnualAverage() throws StudentNotFoundException {
@@ -65,9 +73,9 @@ public class StudentService {
                 }));
         if (student.isEmpty()) {
             throw new StudentNotFoundException("No student found!");
-        } else {
-            return student.get();
         }
+
+        return student.get();
     }
 
     public Student getStudentWithMostAnnualAverageAtASpecialty(Integer specialtyId) throws SpecialtyNotFoundException, StudentNotFoundException {
@@ -75,26 +83,27 @@ public class StudentService {
 
         if (specialty.isEmpty()) {
             throw new SpecialtyNotFoundException("No specialty found!");
-        } else {
-            List<Student> studentsSpecialty = studentRepository.findAll().stream()
-                    .filter(student -> student.getSpecialty().getName().equals(specialty))
-                    .collect(Collectors.toList());
-
-            Optional<Student> student = studentsSpecialty.stream()
-                    .max(Comparator.comparing(s -> {
-                        try {
-                            return s.getAnnualAverageGrade();
-                        } catch (NoGradeException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }));
-
-            if (student.isEmpty()) {
-                throw new StudentNotFoundException("No student found!");
-            } else {
-                return student.get();
-            }
         }
+
+        List<Student> studentsSpecialty = studentRepository.findAll().stream()
+                .filter(student -> student.getSpecialty().getName().equals(specialty))
+                .collect(Collectors.toList());
+
+        Optional<Student> student = studentsSpecialty.stream()
+                .max(Comparator.comparing(s -> {
+                    try {
+                        return s.getAnnualAverageGrade();
+                    } catch (NoGradeException e) {
+                        throw new RuntimeException(e);
+                    }
+                }));
+
+        if (student.isEmpty()) {
+            throw new StudentNotFoundException("No student found!");
+        }
+
+        return student.get();
+
     }
 
 

@@ -1,5 +1,6 @@
 package com.example.Catalogue.controller;
 
+import com.example.Catalogue.exception.NoGradeException;
 import com.example.Catalogue.exception.SpecialtyNotFoundException;
 import com.example.Catalogue.exception.StudentNotFoundException;
 import com.example.Catalogue.model.Grade;
@@ -28,9 +29,9 @@ public class StudentController {
 
     }
 
-    @PostMapping("grades/add/{grade}/{studentId}")
-    public void addGradeByStudentId(@PathVariable Grade grade, @PathVariable Integer id) throws StudentNotFoundException {
-        studentService.addGradeByStudentId(grade, id);
+    @PostMapping("grades/add/{gradeId}/{studentId}")
+    public void addGradeByStudentId(@PathVariable Integer gradeId, @PathVariable Integer studentId) throws StudentNotFoundException, NoGradeException {
+        studentService.addGradeByStudentId(gradeId, studentId);
     }
 
     @GetMapping("most/average")

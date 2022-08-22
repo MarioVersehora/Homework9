@@ -20,9 +20,9 @@ public class ProfessorService {
         Optional<Professor> professor = professorRepository.findById(id);
         if (professor.isEmpty()) {
             throw new ProfessorNotFoundException("No professor found!");
-        } else {
-            return professor.get().getCourses();
         }
+        return professor.get().getCourses();
+
     }
 
 }
