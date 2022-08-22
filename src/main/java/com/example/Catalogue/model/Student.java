@@ -28,16 +28,13 @@ public class Student {
     public Integer getAnnualAverageGrade() throws NoGradeException {
         if (grades.isEmpty()) {
             throw new NoGradeException("You do not have any grade!");
-        } else {
-            Integer averageGrade = 0;
-            for (Grade grade : grades) {
-                averageGrade += grade.getGrade();
-            }
-
-            return averageGrade / grades.size();
-
         }
-    }
+        Integer averageGrade = 0;
+        for (Grade grade : grades) {
+            averageGrade += grade.getGrade();
+        }
 
+        return averageGrade / grades.size();
+    }
 
 }

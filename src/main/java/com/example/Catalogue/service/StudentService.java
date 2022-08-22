@@ -38,7 +38,7 @@ public class StudentService {
         return studentRepository.findAll().stream()
                 .filter(s -> {
                     try {
-                        return s.getAnnualAverageGrade() >= 8;
+                        return s.getAnnualAverageGrade() > 8;
                     } catch (NoGradeException e) {
                         throw new RuntimeException(e);
                     }
@@ -86,7 +86,7 @@ public class StudentService {
         }
 
         List<Student> studentsSpecialty = studentRepository.findAll().stream()
-                .filter(student -> student.getSpecialty().getName().equals(specialty))
+                .filter(student -> student.getSpecialty().getName().equals(specialty.get().getName()))
                 .collect(Collectors.toList());
 
         Optional<Student> student = studentsSpecialty.stream()
