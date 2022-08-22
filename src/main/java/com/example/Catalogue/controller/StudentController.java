@@ -1,5 +1,6 @@
 package com.example.Catalogue.controller;
 
+import com.example.Catalogue.exception.SpecialtyNotFoundException;
 import com.example.Catalogue.exception.StudentNotFoundException;
 import com.example.Catalogue.model.Grade;
 import com.example.Catalogue.model.Student;
@@ -30,6 +31,16 @@ public class StudentController {
     @PostMapping("grades/add/{grade}/{studentId}")
     public void addGradeByStudentId(@PathVariable Grade grade, @PathVariable Integer id) throws StudentNotFoundException {
         studentService.addGradeByStudentId(grade, id);
+    }
+
+    @GetMapping("most/average")
+    public Student getStudentWithMostAnnualAverage() throws StudentNotFoundException {
+        return studentService.getStudentWithMostAnnualAverage();
+    }
+
+    @GetMapping("most/average/specialty/{specialtyId}")
+    public Student getStudentWithMostAnnualAverageAtASpecialty(@PathVariable Integer specialtyId) throws StudentNotFoundException, SpecialtyNotFoundException {
+        return studentService.getStudentWithMostAnnualAverageAtASpecialty(specialtyId);
     }
 
 

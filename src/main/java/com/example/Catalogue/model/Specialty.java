@@ -14,6 +14,8 @@ public class Specialty {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    private String name;
+
     @OneToMany
     private List<Student> students = new ArrayList<>();
 

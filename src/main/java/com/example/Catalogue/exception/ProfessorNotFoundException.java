@@ -2,7 +2,7 @@ package com.example.Catalogue.exception;
 
 public class ProfessorNotFoundException extends Exception {
 
-    String message;
+    private String message;
 
     public ProfessorNotFoundException(String message) {
         this.message = message;
